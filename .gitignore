@@ -1,0 +1,64 @@
+# ── Python ────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ── Virtual Environment ──────────────────────
+venv/
+.venv/
+env/
+
+# ── Environment Variables ────────────────────
+.env
+.env.local
+.env.production
+
+# ── IDE ──────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── Database ─────────────────────────────────
+*.db
+*.sqlite3
+data/
+
+# ── Docker ───────────────────────────────────
+docker-compose.override.yml
+
+# ── Terraform ────────────────────────────────
+infra/terraform/.terraform/
+infra/terraform/*.tfstate
+infra/terraform/*.tfstate.backup
+infra/terraform/.terraform.lock.hcl
+infra/terraform/terraform.tfvars
+
+# ── Logs ─────────────────────────────────────
+logs/
+*.log
+
+# ── OS ───────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Coverage ─────────────────────────────────
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# ── ChromaDB ─────────────────────────────────
+chroma_data/
+
+# ── Misc ─────────────────────────────────────
+*.bak
+*.tmp
+.cache/
