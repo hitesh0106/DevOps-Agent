@@ -2,36 +2,6 @@
 
 Instead of manually running commands, configuring YAML, or debugging failures at 3 AM, DevOps Agent **thinks, plans, and executes** — all while keeping a human-in-the-loop for critical operations.
 
-> **Example:** _"Fix the failing tests in the backend repo"_ → Agent analyzes logs → identifies root cause → creates a fix PR → deploys to staging → reports back.
-
- Architecture
-
-┌──────────────────────────────────────────────────────────────┐
-│                    🖥️  PREMIUM DASHBOARD                     │
-│         (Glassmorphism UI · 3D Animations · Charts)          │
-├──────────────────────────────────────────────────────────────┤
-│                    ⚡ FastAPI Gateway                         │
-│         REST API · WebSocket · Webhook Receivers             │
-├──────────────┬───────────────┬───────────────────────────────┤
-│  🧠 ReAct    │  🔧 Tool      │  🛡️ Safety                    │
-│  Engine      │  Registry     │  Module                       │
-│              │               │                               │
-│  Thought →   │  • GitHub     │  • Command Sanitizer          │
-│  Action →    │  • K8s        │  • Risk Assessment            │
-│  Observe →   │  • Docker     │  • Human Approval             │
-│  Repeat      │  • Terraform  │  • Audit Logger               │
-│              │  • AWS        │  • Sandbox Executor            │
-├──────────────┴───────────────┴───────────────────────────────┤
-│                 💾 Memory & State Layer                       │
-│     Short-Term (RAM) · Episodic (SQLite) · Vector (Chroma)   │
-├──────────────────────────────────────────────────────────────┤
-│                 🔄 Background Workers                         │
-│         Celery + Redis (Pipeline · Monitor · Agent)          │
-├──────────────────────────────────────────────────────────────┤
-│           📦 Infrastructure (Docker Compose)                  │
-│     PostgreSQL · Redis · Prometheus · Grafana · Alertmanager │
-└──────────────────────────────────────────────────────────────┘
-
 **Quick Start**
 
  Prerequisites
