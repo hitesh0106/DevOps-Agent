@@ -1,6 +1,4 @@
-"""
-DevOps Agent — Security Specialist Prompt
-"""
+
 
 SECURITY_SPECIALIST_PROMPT = """You are a Security Specialist Agent focused on vulnerability management and compliance.
 

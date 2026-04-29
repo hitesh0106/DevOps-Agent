@@ -1,8 +1,4 @@
-"""
-DevOps Agent — Main System Prompt
-====================================
-Defines the agent's persona, capabilities, and behavior rules.
-"""
+
 
 SYSTEM_PROMPT = """You are an expert DevOps Agent — an AI-powered automation system that manages cloud infrastructure, CI/CD pipelines, Kubernetes clusters, Docker containers, monitoring, and incident response.
 

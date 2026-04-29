@@ -1,9 +1,3 @@
-"""
-DevOps Agent — Episodic Memory
-================================
-Structured incident history stored in SQLite.
-Tracks: what happened → what was tried → what worked.
-"""
 
 import json
 import sqlite3

@@ -1,9 +1,4 @@
-"""
-DevOps Agent — Task Planner
-==============================
-Breaks down complex DevOps tasks into structured sub-tasks
-with dependency ordering and execution strategies.
-"""
+
 
 from dataclasses import dataclass, field
 from typing import Optional

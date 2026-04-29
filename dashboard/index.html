@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevOps Agent — AI Command Center</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Notification Overlay -->
+        <div class="notif-overlay" id="notif-overlay"></div>
+        
+        <!-- Notification Panel -->
+        <aside class="notif-panel" id="notif-panel">
+            <div class="notif-header">
+                <h3>Notifications</h3>
+                <button class="notif-close" id="notif-close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="notif-body" id="notif-items">
+                <!-- Notifications will be injected here -->
+                <div class="notif-item unread">
+                    <div class="notif-dot" style="background: var(--danger)"></div>
+                    <div class="notif-content">
+                        <p>Critical Alert: High memory usage on node-3</p>
+                        <small>2 minutes ago</small>
+                    </div>
+                </div>
+                <div class="notif-item">
+                    <div class="notif-dot" style="background: var(--success)"></div>
+                    <div class="notif-content">
+                        <p>Agent successfully resolved Pod CrashLoop</p>
+                        <small>15 minutes ago</small>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 16px; border-top: 1px solid var(--border)">
+                <button class="mark-read-btn" style="width: 100%">Mark all as read</button>
+            </div>
+        </aside>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-robot logo-icon"></i>
+                <span>DevOps Agent</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-target="dashboard"><i class="fa-solid fa-gauge"></i><span>Dashboard</span></a>
+                <a href="#" class="nav-item" data-target="terminal"><i class="fa-solid fa-terminal"></i><span>Agent Terminal</span></a>
+                <a href="#" class="nav-item" data-target="pipelines"><i class="fa-solid fa-code-branch"></i><span>Pipelines</span></a>
+                <a href="#" class="nav-item" data-target="infrastructure"><i class="fa-solid fa-server"></i><span>Infrastructure</span></a>
+                <a href="#" class="nav-item" data-target="deployments"><i class="fa-solid fa-clock-rotate-left"></i><span>Deployments</span></a>
+                <a href="#" class="nav-item" data-target="security"><i class="fa-solid fa-shield-halved"></i><span>Security Scan</span></a>
+                <a href="#" class="nav-item" data-target="finops"><i class="fa-solid fa-chart-line"></i><span>FinOps / Costs</span></a>
+                <a href="#" class="nav-item" data-target="audit"><i class="fa-solid fa-list-check"></i><span>Audit Logs</span></a>
+                <a href="#" class="nav-item" data-target="marketplace"><i class="fa-solid fa-shop"></i><span>Marketplace</span></a>
+                <a href="#" class="nav-item" data-target="settings"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <div class="status-dot healthy"></div>
+                    <span>System Healthy</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Search tasks, incidents, resources...">
+                </div>
+                <div class="user-actions">
+                    <button class="btn-icon" id="notif-btn">
+                        <i class="fa-solid fa-bell"></i>
+                        <span class="badge">2</span>
+                    </button>
+                    <div class="avatar">DA</div>
+                </div>
+            </header>
+
+            <!-- Views Container -->
+            <div id="views">
+                <!-- DASHBOARD VIEW -->
+                <section class="view-section active" id="view-dashboard">
+                    <div class="section-header">
+                        <h1 class="page-title">Command Overview</h1>
+                        <div class="filter-bar">
+                            <button class="filter-chip active">Last 24h</button>
+                            <button class="filter-chip">Last 7d</button>
+                            <button class="filter-chip">Last 30d</button>
+                        </div>
+                    </div>
+                    
+                    <div class="kpi-grid">
+                        <div class="kpi-card glass">
+                            <div class="kpi-header">
+                                <h3>Total Agent Tasks</h3>
+                                <i class="fa-solid fa-microchip text-blue"></i>
+                            </div>
+                            <div class="kpi-value counter-animate" data-target="1248">0</div>
+                            <div class="kpi-trend positive"><i class="fa-solid fa-arrow-up"></i> 12% vs last month</div>
+                        </div>
+                        <div class="kpi-card glass">
+                            <div class="kpi-header">
+                                <h3>Success Rate</h3>
+                                <i class="fa-solid fa-circle-check text-green"></i>
+                            </div>
+                            <div class="kpi-value">99.4%</div>
+                            <div class="kpi-trend positive">Optimized</div>
+                        </div>
+                        <div class="kpi-card glass">
+                            <div class="kpi-header">
+                                <h3>Active Incidents</h3>
+                                <i class="fa-solid fa-fire-flame-curved text-red"></i>
+                            </div>
+                            <div class="kpi-value counter-animate" data-target="2">0</div>
+                            <div class="kpi-trend negative">Critical</div>
+                        </div>
+                        <div class="kpi-card glass">
+                            <div class="kpi-header">
+                                <h3>Cost Savings</h3>
+                                <i class="fa-solid fa-hand-holding-dollar text-yellow"></i>
+                            </div>
+                            <div class="kpi-value">$1.2k</div>
+                            <div class="kpi-trend positive"><i class="fa-solid fa-arrow-up"></i> 8% growth</div>
+                        </div>
+                    </div>
+
+                    <div class="charts-row">
+                        <div class="chart-container glass">
+                            <div class="chart-header">
+                                <h3>Infrastructure Health Metrics</h3>
+                                <i class="fa-solid fa-ellipsis-vertical text-muted"></i>
+                            </div>
+                            <div class="chart-body">
+                                <canvas id="mainHealthChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="chart-container glass">
+                            <div class="chart-header">
+                                <h3>Agent Activity Feed</h3>
+                            </div>
+                            <div class="activity-feed" id="activity-feed">
+                                <!-- Feed Items -->
+                                <div class="feed-item">
+                                    <div class="feed-icon blue"><i class="fa-solid fa-robot"></i></div>
+                                    <div class="feed-text">Agent <strong>analyzed</strong> CI failure in <code>backend-api</code></div>
+                                    <div class="feed-time">2m ago</div>
+                                </div>
+                                <div class="feed-item">
+                                    <div class="feed-icon green"><i class="fa-solid fa-code-pull-request"></i></div>
+                                    <div class="feed-text">Created fix PR <strong>#421</strong> for dependency vulnerability</div>
+                                    <div class="feed-time">15m ago</div>
+                                </div>
+                                <div class="feed-item">
+                                    <div class="feed-icon yellow"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                                    <div class="feed-text">Detected <strong>unusual latency</strong> in production-us-east</div>
+                                    <div class="feed-time">1h ago</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TERMINAL VIEW -->
+                <section class="view-section" id="view-terminal">
+                    <h1 class="page-title">Agent Terminal</h1>
+                    <div class="terminal-container glass">
+                        <div class="terminal-header">
+                            <div class="window-controls">
+                                <span class="control close"></span>
+                                <span class="control minimize"></span>
+                                <span class="control maximize"></span>
+                            </div>
+                            <div class="terminal-title">DevOps Agent — ReAct Engine</div>
+                        </div>
+                        <div class="terminal-body" id="terminal-output">
+                            <div class="terminal-line"><span class="prompt">agent@nucleus:~$</span> Session started. Awaiting instructions...</div>
+                        </div>
+                        <div class="quick-actions">
+                            <button class="quick-btn" data-cmd="Check pod health">Check Pods</button>
+                            <button class="quick-btn" data-cmd="Analyze recent CI failures">Analyze CI</button>
+                            <button class="quick-btn" data-cmd="Scan infrastructure for vulnerabilities">Security Scan</button>
+                            <button class="quick-btn" data-cmd="Find cost optimization opportunities">FinOps Check</button>
+                        </div>
+                        <div class="terminal-input-container">
+                            <span class="prompt">agent@nucleus:~$</span>
+                            <input type="text" id="terminal-input" class="terminal-input" placeholder="Type a task (e.g. 'Fix failing tests in backend repo')..." autocomplete="off">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PIPELINES VIEW -->
+                <section class="view-section" id="view-pipelines">
+                    <h1 class="page-title">CI/CD Pipelines</h1>
+                    <div class="data-table glass">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Pipeline Name</th>
+                                    <th>Status</th>
+                                    <th>Duration</th>
+                                    <th>Last Run</th>
+                                    <th>Trigger</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>main-app-ci</strong></td>
+                                    <td><span class="status-badge success"><i class="fa-solid fa-check"></i> Success</span></td>
+                                    <td>4m 12s</td>
+                                    <td>12m ago</td>
+                                    <td><i class="fa-solid fa-code-commit"></i> push</td>
+                                    <td><button class="btn-icon"><i class="fa-solid fa-play"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>backend-api-deploy</strong></td>
+                                    <td><span class="status-badge running"><i class="fa-solid fa-spinner fa-spin"></i> Running</span></td>
+                                    <td>2m 45s</td>
+                                    <td>now</td>
+                                    <td><i class="fa-solid fa-code-merge"></i> merge</td>
+                                    <td><button class="btn-icon"><i class="fa-solid fa-stop"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- SECURITY VIEW -->
+                <section class="view-section" id="view-security">
+                    <div class="section-header">
+                        <h1 class="page-title">Security Scanner</h1>
+                        <button class="action-btn primary" id="start-scan-btn">
+                            <i class="fa-solid fa-shield-virus"></i> Run Full Scan
+                        </button>
+                    </div>
+
+                    <div class="kpi-grid">
+                        <div class="kpi-card glass">
+                            <div class="kpi-header"><h3>Critical</h3></div>
+                            <div class="kpi-value text-red">0</div>
+                        </div>
+                        <div class="kpi-card glass">
+                            <div class="kpi-header"><h3>High</h3></div>
+                            <div class="kpi-value text-yellow">2</div>
+                        </div>
+                        <div class="kpi-card glass">
+                            <div class="kpi-header"><h3>Medium</h3></div>
+                            <div class="kpi-value">14</div>
+                        </div>
+                        <div class="kpi-card glass">
+                            <div class="kpi-header"><h3>Passed Checks</h3></div>
+                            <div class="kpi-value text-green">142</div>
+                        </div>
+                    </div>
+
+                    <div class="two-col">
+                        <div class="glass" style="padding: 24px;">
+                            <h3>Vulnerability Distribution</h3>
+                            <div class="chart-body" style="height: 300px;">
+                                <canvas id="securityChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="glass" style="padding: 24px;">
+                            <h3>Active Threats</h3>
+                            <div class="data-table" style="margin-top: 16px;">
+                                <table>
+                                    <thead>
+                                        <tr><th>CVE-ID</th><th>Severity</th><th>Service</th><th>Status</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>CVE-2024-1234</td><td><span class="severity critical">Critical</span></td><td>api-gateway</td><td><span class="status-badge failed">Patching</span></td></tr>
+                                        <tr><td>CVE-2023-5678</td><td><span class="severity warning">High</span></td><td>auth-service</td><td><span class="status-badge warning">Pending</span></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- FINOPS VIEW -->
+                <section class="view-section" id="view-finops">
+                    <h1 class="page-title">Cloud Financials (FinOps)</h1>
+                    <div class="kpi-grid">
+                        <div class="kpi-card glass">
+                            <div class="kpi-header"><h3>Monthly Forecast</h3></div>
+                            <div class="kpi-value">$4,250</div>
+                            <div class="kpi-trend negative"><i class="fa-solid fa-arrow-up"></i> 4% vs budget</div>
+                        </div>
+                        <div class="kpi-card glass">
+                            <div class="kpi-header"><h3>Daily Spend</h3></div>
+                            <div class="kpi-value">$142.50</div>
+                        </div>
+                        <div class="kpi-card glass">
+                            <div class="kpi-header"><h3>Potential Savings</h3></div>
+                            <div class="kpi-value text-green">$840.00</div>
+                        </div>
+                    </div>
+
+                    <div class="chart-container glass" style="margin-bottom: 24px;">
+                        <h3>Cost Trend (Last 30 Days)</h3>
+                        <div class="chart-body">
+                            <canvas id="costChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="glass" style="padding: 24px;">
+                        <h3>Optimization Opportunities</h3>
+                        <div class="data-table" style="margin-top: 16px;">
+                            <table>
+                                <thead>
+                                    <tr><th>Resource</th><th>Type</th><th>Issue</th><th>Potential Saving</th><th>Action</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>dev-db-instance</td><td>RDS</td><td>Over-provisioned (10% max CPU)</td><td>$120/mo</td><td><button class="quick-btn">Rightsize</button></td></tr>
+                                    <tr><td>unused-ebs-vol-4</td><td>EBS</td><td>Unattached for 14 days</td><td>$45/mo</td><td><button class="quick-btn">Delete</button></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- DEPLOYMENTS VIEW -->
+                <section class="view-section" id="view-deployments">
+                    <h1 class="page-title">Deployment Timeline</h1>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot running"></div>
+                            <div class="timeline-card">
+                                <div class="timeline-meta">
+                                    <h4>backend-api v2.4.1</h4>
+                                    <span class="env-badge prod">Production</span>
+                                    <small>Started 2m ago</small>
+                                </div>
+                                <p>Deploying new JWT authentication layer...</p>
+                                <div class="scan-progress"><div class="scan-progress-bar" style="width: 45%"></div></div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot success"></div>
+                            <div class="timeline-card">
+                                <div class="timeline-meta">
+                                    <h4>frontend-dashboard v1.9.0</h4>
+                                    <span class="env-badge prod">Production</span>
+                                    <small>2 hours ago</small>
+                                </div>
+                                <p>UI/UX enhancements and performance tuning.</p>
+                                <button class="rollback-btn"><i class="fa-solid fa-rotate-left"></i> Rollback</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- AUDIT VIEW -->
+                <section class="view-section" id="view-audit">
+                    <div class="section-header">
+                        <h1 class="page-title">Audit Logs</h1>
+                        <div class="search-bar" style="width: 250px;">
+                            <i class="fa-solid fa-filter"></i>
+                            <input type="text" placeholder="Filter actions...">
+                        </div>
+                    </div>
+                    <div class="data-table glass">
+                        <table>
+                            <thead>
+                                <tr><th>Timestamp</th><th>Actor</th><th>Action</th><th>Resource</th><th>Impact</th></tr>
+                            </thead>
+                            <tbody id="audit-logs">
+                                <tr><td>2024-04-28 22:15:04</td><td><i class="fa-solid fa-robot text-blue"></i> Agent</td><td>Scaling Deployment</td><td>auth-service</td><td><span class="severity info">Low</span></td></tr>
+                                <tr><td>2024-04-28 21:30:12</td><td><i class="fa-solid fa-user text-accent"></i> Admin</td><td>Config Update</td><td>prod-vpc-settings</td><td><span class="severity warning">Medium</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- INFRASTRUCTURE VIEW -->
+                <section class="view-section" id="view-infrastructure">
+                    <h1 class="page-title">Infrastructure Map</h1>
+                    <div class="infra-grid">
+                        <div class="glass" style="padding: 24px;">
+                            <h3>Kubernetes Nodes</h3>
+                            <div id="k8s-nodes-list" style="margin-top: 16px;">
+                                <!-- Node cards will go here -->
+                                <div class="node-card">
+                                    <div class="node-header"><span class="status-badge success">Ready</span> <strong>node-01</strong></div>
+                                    <div class="progress-row"><span>CPU</span> <div class="progress-bar"><div class="progress-fill" style="width: 45%; background: var(--primary)"></div></div> <span>45%</span></div>
+                                    <div class="progress-row"><span>RAM</span> <div class="progress-bar"><div class="progress-fill" style="width: 62%; background: var(--accent)"></div></div> <span>62%</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="glass" style="padding: 24px;">
+                            <h3>Active Containers</h3>
+                            <div id="container-list" style="margin-top: 16px;">
+                                <div class="node-card">
+                                    <div class="node-header"><span class="status-badge running">Running</span> <strong>api-gateway</strong></div>
+                                    <p class="text-sm">Image: nginx:alpine | Port: 80, 443</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MARKETPLACE VIEW -->
+                <section class="view-section" id="view-marketplace">
+                    <div class="section-header">
+                        <h1 class="page-title">Service Marketplace</h1>
+                        <p class="text-muted">Select a blueprint and let the Agent deploy it for you.</p>
+                    </div>
+
+                    <div class="kpi-grid">
+                        <div class="catalog-card glass">
+                            <div class="catalog-icon purple"><i class="fa-brands fa-wordpress"></i></div>
+                            <h3>WordPress Stack</h3>
+                            <p>Complete stack with MySQL, Nginx, and PHP-FPM.</p>
+                            <div class="catalog-meta">
+                                <span><i class="fa-solid fa-microchip"></i> 1 vCPU</span>
+                                <span><i class="fa-solid fa-memory"></i> 2GB RAM</span>
+                            </div>
+                            <button class="action-btn primary deploy-blueprint" data-app="WordPress">
+                                <i class="fa-solid fa-rocket"></i> Deploy to Prod
+                            </button>
+                        </div>
+
+                        <div class="catalog-card glass">
+                            <div class="catalog-icon blue"><i class="fa-solid fa-database"></i></div>
+                            <h3>Redis Cluster</h3>
+                            <p>Highly available 3-node Redis cluster with Sentinel.</p>
+                            <div class="catalog-meta">
+                                <span><i class="fa-solid fa-server"></i> 3 Nodes</span>
+                                <span><i class="fa-solid fa-shield"></i> HA Enabled</span>
+                            </div>
+                            <button class="action-btn primary deploy-blueprint" data-app="Redis">
+                                <i class="fa-solid fa-rocket"></i> Deploy to Prod
+                            </button>
+                        </div>
+
+                        <div class="catalog-card glass">
+                            <div class="catalog-icon green"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                            <h3>ELK Stack</h3>
+                            <p>Elasticsearch, Logstash, and Kibana for logging.</p>
+                            <div class="catalog-meta">
+                                <span><i class="fa-solid fa-memory"></i> 8GB RAM</span>
+                                <span><i class="fa-solid fa-hard-drive"></i> 100GB SSD</span>
+                            </div>
+                            <button class="action-btn primary deploy-blueprint" data-app="ELK">
+                                <i class="fa-solid fa-rocket"></i> Deploy to Prod
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="glass" style="padding: 24px; margin-top: 24px;">
+                        <h3>Active Deployment Jobs</h3>
+                        <div class="data-table" style="margin-top: 16px;" id="deployment-jobs">
+                            <table>
+                                <thead>
+                                    <tr><th>Task ID</th><th>Application</th><th>Status</th><th>Progress</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td colspan="4" style="text-align: center; color: var(--text-muted);">No active deployments</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SETTINGS VIEW -->
+                <section class="view-section" id="view-settings">
+                    <h1 class="page-title">Control Settings</h1>
+                    <div class="settings-grid">
+                        <div class="glass settings-card">
+                            <h3><i class="fa-solid fa-brain text-accent"></i> Agent Configuration</h3>
+                            <div class="setting-row"><span>LLM Provider</span> <strong>Anthropic Claude 3.5</strong></div>
+                            <div class="setting-row"><span>Max Iterations</span> <strong>15</strong></div>
+                            <div class="setting-row"><span>Safety Mode</span> <span class="status-badge success">Strict</span></div>
+                        </div>
+                        <div class="glass settings-card">
+                            <h3><i class="fa-solid fa-link text-blue"></i> Integrations</h3>
+                            <div class="setting-row"><span>GitHub</span> <span class="status-badge success">Connected</span></div>
+                            <div class="setting-row"><span>AWS Cloud</span> <span class="status-badge success">Connected</span></div>
+                            <div class="setting-row"><span>Slack</span> <span class="status-badge warning">Disconnected</span></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Background Canvas for particles -->
+    <canvas id="bg-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; opacity: 0.3;"></canvas>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/charts.js"></script>
+    <script src="/js/terminal.js"></script>
+    <script src="/js/websocket.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>

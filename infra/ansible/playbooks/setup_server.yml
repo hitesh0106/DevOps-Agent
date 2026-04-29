@@ -1,0 +1,61 @@
+---
+- name: Setup DevOps Agent Server
+  hosts: all
+  become: true
+
+  vars:
+    python_version: "3.11"
+    app_user: agent
+    app_dir: /opt/devops-agent
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install system dependencies
+      apt:
+        name:
+          - python{{ python_version }}
+          - python{{ python_version }}-venv
+          - python3-pip
+          - git
+          - docker.io
+          - docker-compose
+          - redis-server
+          - nginx
+          - curl
+        state: present
+
+    - name: Create application user
+      user:
+        name: "{{ app_user }}"
+        shell: /bin/bash
+        create_home: yes
+
+    - name: Create application directory
+      file:
+        path: "{{ app_dir }}"
+        state: directory
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+        mode: "0755"
+
+    - name: Add user to docker group
+      user:
+        name: "{{ app_user }}"
+        groups: docker
+        append: yes
+
+    - name: Enable and start Docker
+      systemd:
+        name: docker
+        enabled: yes
+        state: started
+
+    - name: Enable and start Redis
+      systemd:
+        name: redis-server
+        enabled: yes
+        state: started

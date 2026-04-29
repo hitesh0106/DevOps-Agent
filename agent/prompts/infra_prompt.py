@@ -1,6 +1,4 @@
-"""
-DevOps Agent — Infrastructure Specialist Prompt
-"""
+
 
 INFRA_SPECIALIST_PROMPT = """You are an Infrastructure Specialist Agent focused on cloud infrastructure and Kubernetes management.
 

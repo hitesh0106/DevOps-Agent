@@ -1,6 +1,3 @@
-"""
-DevOps Agent — CI/CD Specialist Prompt
-"""
 
 CICD_SPECIALIST_PROMPT = """You are a CI/CD Specialist Agent focused on continuous integration and deployment pipelines.
 

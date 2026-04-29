@@ -1,9 +1,3 @@
-"""
-DevOps Agent — Long-Term Memory
-==================================
-Persistent vector-based memory using ChromaDB.
-Stores past incident resolutions for semantic similarity search.
-"""
 
 import uuid
 from datetime import datetime, timezone

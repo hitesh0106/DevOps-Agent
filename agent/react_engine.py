@@ -1,16 +1,3 @@
-"""
-DevOps Agent — ReAct Engine
-=============================
-Implementation of the ReAct (Reasoning + Acting) loop.
-
-The engine follows this cycle:
-    1. THINK  — LLM analyzes the situation and decides what to do
-    2. ACT    — Execute the chosen tool with parameters
-    3. OBSERVE — Capture the tool's output
-    4. REPEAT — Until the task is complete or max iterations reached
-
-This is the core "brain" of the DevOps Agent.
-"""
 
 import json
 import time

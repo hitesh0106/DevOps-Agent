@@ -1,18 +1,3 @@
-"""
-DevOps Agent — Core Orchestrator
-==================================
-The main DevOps Agent class that coordinates the ReAct engine,
-tools, memory, and safety systems to execute DevOps tasks autonomously.
-
-Usage:
-    # Programmatic
-    from agent.core import DevOpsAgent
-    agent = DevOpsAgent()
-    result = agent.run("Check the health of all running containers")
-    
-    # CLI
-    python -m agent.core "Diagnose why the API is returning 500 errors"
-"""
 
 import sys
 import time

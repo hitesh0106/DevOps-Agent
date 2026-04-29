@@ -1,9 +1,3 @@
-"""
-DevOps Agent — Short-Term Memory
-==================================
-In-memory conversation buffer for the current agent session.
-Stores recent thoughts, actions, and observations with auto-truncation.
-"""
 
 from datetime import datetime, timezone
 from typing import Optional

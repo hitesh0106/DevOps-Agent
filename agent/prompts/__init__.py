@@ -1,4 +1,4 @@
-"""DevOps Agent — System Prompts Package"""
+
 
 from agent.prompts.system_prompt import SYSTEM_PROMPT, get_system_prompt
 from agent.prompts.cicd_prompt import CICD_SPECIALIST_PROMPT
